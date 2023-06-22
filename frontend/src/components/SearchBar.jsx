@@ -2,6 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 
 export default function SearchBar() {
     return (
@@ -11,13 +12,28 @@ export default function SearchBar() {
                   component="form"
                   noValidate
                   autoComplete="off"
+                  sx={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'space-between',
+                    gap: 2 
+                  }}
                 >
                   <TextField 
                     id="outlined-basic" 
-                    label="Outlined" 
+                    label="Ingrese su búsqueda" 
                     variant="outlined" 
-                    fullWidth 
+                    sx={{ flex: '1 1 auto' }} 
+                    inputProps={{style: {height: 10}}}
+                    InputLabelProps={{
+                      style: { 
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        marginLeft: 15
+                      },
+                    }}
                   />
+                  <Button variant="contained">Buscar</Button>
                 </Box>
             </Grid>
         </Grid>
