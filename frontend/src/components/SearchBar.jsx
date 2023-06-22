@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 
 export default function SearchBar() {
     return (
+      <Box sx={{ margin: '2em', marginBottom: '0'}}>
         <Grid container spacing={2}>
             <Grid item xs={12} sm={8} md={6} lg={5}>
                 <Box
@@ -24,18 +25,12 @@ export default function SearchBar() {
                     label="Ingrese su búsqueda" 
                     variant="outlined" 
                     sx={{ flex: '1 1 auto' }} 
-                    inputProps={{style: {height: 10}}}
-                    InputLabelProps={{
-                      style: { 
-                        top: '50%',
-                        transform: 'translateY(-50%)',
-                        marginLeft: 15
-                      },
-                    }}
+                    size='small'
                   />
                   <Button variant="contained">Buscar</Button>
                 </Box>
             </Grid>
         </Grid>
+      </Box>
     );
 }
