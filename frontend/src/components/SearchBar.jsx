@@ -3,8 +3,24 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
+import { Typography } from '@mui/material';
 
 export default function SearchBar() {
+   
+    const [input, setInput] = React.useState('');
+    const [search, setSearch] = React.useState('');
+
+    const handleInputChange = (e) => {
+      setInput(e.target.value);
+    }
+
+    const handleSearch = (e) => {
+      e.preventDefault();
+      setSearch(input);
+    }
+
+
+
     return (
       <Box sx={{ margin: '2em', marginBottom: '0'}}>
         <Grid container spacing={2}>
@@ -26,8 +42,20 @@ export default function SearchBar() {
                     variant="outlined" 
                     sx={{ flex: '1 1 auto' }} 
                     size='small'
+                    onChange={handleInputChange}
+                    value={input}
                   />
-                  <Button variant="contained">Buscar</Button>
+                  <Button 
+                    variant="contained"
+                    onClick={ handleSearch }
+                  >
+                    Buscar
+                  </Button>
+
+                  <Typography variant='body2'>
+                    { search ? `Resultados para: ${search}` : '' }
+                  </Typography>
+                  
                 </Box>
             </Grid>
         </Grid>
