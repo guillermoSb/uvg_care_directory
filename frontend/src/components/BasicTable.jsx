@@ -7,46 +7,46 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useFetchEmployees } from '../hooks/useFetchEmployees';
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+export default function BasicTable({ search }) {
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+  const { employees, isLoading } = useFetchEmployees(search);
 
-export default function BasicTable() {
+  if (isLoading) {
+    return <div>Loading...</div>;  // Or replace with your own loading component
+  }
+
   return (
     <Box sx={{ margin: '2em' }}>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
-              <TableCell align="right">Calories</TableCell>
-              <TableCell align="right">Fat&nbsp;(g)</TableCell>
-              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-              <TableCell align="right">Protein&nbsp;(g)</TableCell>
+              <TableCell> Código </TableCell>
+              <TableCell align="right">Nombre</TableCell>
+              <TableCell align="right">Apellido</TableCell>
+              <TableCell align="right">Dirección</TableCell>
+              <TableCell align="right">Puesto</TableCell>
+              <TableCell align="right">Correo</TableCell>
+              <TableCell align="right">Teléfono</TableCell>
+              <TableCell align="right">Teléfono 2</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {employees && employees.map((employee) => (
               <TableRow
-                key={row.name}
+                key={employee.employeeCode}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
+                <TableCell component="th" scope="row">{employee.employeeCode}</TableCell>
+                <TableCell align="right">{employee.name}</TableCell>
+                <TableCell align="right">{employee.lastName}</TableCell>
+                <TableCell align="right">{employee.location}</TableCell>
+                <TableCell align="right">{employee.position}</TableCell>
+                <TableCell align="right">{employee.email}</TableCell>
+                <TableCell align="right">{employee.phoneNumber}</TableCell>
+                <TableCell align="right">{employee.phoneNumber2}</TableCell>
               </TableRow>
             ))}
           </TableBody>
