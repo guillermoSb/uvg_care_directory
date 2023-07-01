@@ -1,8 +1,9 @@
 
-import { Box, Typography } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import { useState } from 'react';
 import BasicTable from './components/BasicTable';
 import SearchBar from './components/SearchBar';
+import Title from './components/Title';
 
 export const DirectoryApp = () => {
 
@@ -10,15 +11,9 @@ export const DirectoryApp = () => {
 
   return (
     <Box>
-      <Box display='flex' marginTop='2em' marginBottom='3em'>
-        <Typography m='auto' variant="h2" gutterBottom>
-          Directorio
-        </Typography>
-      </Box>
-
+      <Title />
       <SearchBar setSearchh={setSearch} />
       <BasicTable search={search} />
-
     </Box>
 
   )
