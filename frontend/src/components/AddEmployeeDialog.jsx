@@ -41,13 +41,18 @@ export default function AddEmployeeDialog({ open, handleClose }) {
     return false;
   };
 
+  const isEmailValid = (email) => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  }
+
   const handleAccept = () => {
     if (first) {
       setFirst(false);
       return;
     }
 
-    if (!isFormEmpty() && !first) {
+    if (!isFormEmpty() && !first && isEmailValid(employee['Correo Electrónico'])) {
       handleClose();
     }
   };
@@ -68,12 +73,12 @@ export default function AddEmployeeDialog({ open, handleClose }) {
               autoFocus
               margin="dense"
               label={key}
-              type="text"
+              type={key === 'Correo Electrónico' ? 'email' : 'text'}
               fullWidth
               variant="standard"
               required={key !== 'Teléfono Secundario'}
-              error={key !== 'Teléfono Secundario' && employee[key] === '' && !first}
-              helperText={key !== 'Teléfono Secundario' &&  employee[key] === '' && !first ? 'Campo requerido.' : ''}
+              error={(key !== 'Teléfono Secundario' && employee[key] === '' && !first) || (key === 'Correo Electrónico' && !isEmailValid(employee[key]) && !first)}
+              helperText={(key !== 'Teléfono Secundario' &&  employee[key] === '' && !first) ? 'Campo requerido.' : (key === 'Correo Electrónico' && !isEmailValid(employee[key]) && !first ? 'Formato de correo electrónico inválido.' : '')}
               name={key}
               value={employee[key]}
               onChange={handleInputChange}
