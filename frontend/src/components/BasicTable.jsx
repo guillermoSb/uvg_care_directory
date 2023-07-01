@@ -8,13 +8,14 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useFetchEmployees } from '../hooks/useFetchEmployees';
+import { Typography } from '@mui/material';
 
 export default function BasicTable({ search }) {
 
   const { employees, isLoading } = useFetchEmployees(search);
 
   if (isLoading) {
-    return <div>Loading...</div>;  // Or replace with your own loading component
+    return <div>Loading...</div>;  
   }
 
   return (
@@ -52,6 +53,11 @@ export default function BasicTable({ search }) {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <Typography variant='body2'>
+        { search ? `Resultados para: ${search}` : '' }
+      </Typography>
+      
     </Box>
   );
 }

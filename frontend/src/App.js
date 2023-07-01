@@ -1,14 +1,10 @@
 
-import BasicTable from './components/BasicTable';
-import SearchBar from './components/SearchBar';
-import Title from './components/Title';
+import { DirectoryApp } from './DirectoryApp';
 
 function App() {
   return (
     <div>
-      <Title />
-      <SearchBar />
-      <BasicTable />
+      <DirectoryApp />
     </div>
   );
 }

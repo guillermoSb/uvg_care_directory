@@ -3,12 +3,11 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-import { Typography } from '@mui/material';
 
-export default function SearchBar() {
-   
+
+export default function SearchBar({ setSearchh }) {
+
     const [input, setInput] = React.useState('');
-    const [search, setSearch] = React.useState('');
 
     const handleInputChange = (e) => {
       setInput(e.target.value);
@@ -16,10 +15,8 @@ export default function SearchBar() {
 
     const handleSearch = (e) => {
       e.preventDefault();
-      setSearch(input);
+      setSearchh(input);
     }
-
-
 
     return (
       <Box sx={{ margin: '2em', marginBottom: '0'}}>
@@ -51,11 +48,7 @@ export default function SearchBar() {
                   >
                     Buscar
                   </Button>
-
-                  <Typography variant='body2'>
-                    { search ? `Resultados para: ${search}` : '' }
-                  </Typography>
-                  
+ 
                 </Box>
             </Grid>
         </Grid>
