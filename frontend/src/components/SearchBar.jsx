@@ -20,7 +20,7 @@ export default function SearchBar({ setSearchh }) {
 
     return (
       <Box sx={{ margin: '2em', marginBottom: '0'}}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} justifyContent="center">
             <Grid item xs={12} sm={8} md={6} lg={5}>
                 <Box
                   component="form"

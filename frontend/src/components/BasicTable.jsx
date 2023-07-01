@@ -8,7 +8,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useFetchEmployees } from '../hooks/useFetchEmployees';
-import { Typography } from '@mui/material';
+import { Typography, Button } from '@mui/material';
+
 
 export default function BasicTable({ search }) {
 
@@ -19,7 +20,15 @@ export default function BasicTable({ search }) {
   }
 
   return (
-    <Box sx={{ margin: '2em' }}>
+    <Box sx={{ margin: '2em', marginTop: '3em' }}>
+      
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1em'}}>
+        <Button variant="outlined">
+          Agregar trabajador
+        </Button>
+      </Box>
+
+
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -57,7 +66,7 @@ export default function BasicTable({ search }) {
       <Typography variant='body2'>
         { search ? `Resultados para: ${search}` : '' }
       </Typography>
-      
+
     </Box>
   );
 }
