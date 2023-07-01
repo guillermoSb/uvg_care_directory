@@ -6,17 +6,20 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { addEmployee } from '../helpers/addEmployee';
+
 
 export default function AddEmployeeDialog({ open, handleClose }) {
+  
   const [employee, setEmployee] = React.useState({
-    'Código': '',
-    'Nombre': '',
-    'Apellido': '',
-    'Dirección': '',
-    'Puesto': '',
-    'Correo Electrónico': '',
-    'Teléfono': '',
-    'Teléfono Secundario': ''
+    'employeeCode': '',
+    'name': '',
+    'lastName': '',
+    'location': '',
+    'position': '',
+    'email': '',
+    'phoneNumber': '',
+    'phoneNumber2': ''
   });
 
   const [first, setFirst] = React.useState(true);
@@ -24,14 +27,14 @@ export default function AddEmployeeDialog({ open, handleClose }) {
   const handleInputChange = (event) => {
     setEmployee({
       ...employee,
-      [event.target.name]: event.target.value,
+      [event.target.id]: event.target.value,
     });
-  };
+  };  
 
   const isFormEmpty = () => {
 
     let fields = { ...employee };
-    delete fields['Teléfono Secundario'];
+    delete fields['phoneNumber2'];
 
     for (let key in fields) {
       if (fields[key] === '') {
@@ -52,8 +55,11 @@ export default function AddEmployeeDialog({ open, handleClose }) {
       return;
     }
 
-    if (!isFormEmpty() && !first && isEmailValid(employee['Correo Electrónico'])) {
+    if (!isFormEmpty() && !first && isEmailValid(employee['email'])) {
       handleClose();
+      addEmployee(employee);
+
+      // console.log(employee);
     }
   };
 
@@ -72,13 +78,22 @@ export default function AddEmployeeDialog({ open, handleClose }) {
               key={index}
               autoFocus
               margin="dense"
-              label={key}
-              type={key === 'Correo Electrónico' ? 'email' : 'text'}
+              id={key}
+              label={
+                key === 'employeeCode' ? 'Código' :
+                key === 'name' ? 'Nombre' :
+                key === 'lastName' ? 'Apellido' :
+                key === 'location' ? 'Dirección' :
+                key === 'position' ? 'Puesto' :
+                key === 'email' ? 'Correo Electrónico' : 
+                key === 'phoneNumber' ? 'Teléfono' : 
+                key === 'phoneNumber2' ? 'Teléfono Secundario' : key}
+              type={key === 'email' ? 'email' : 'text'}
               fullWidth
               variant="standard"
-              required={key !== 'Teléfono Secundario'}
-              error={(key !== 'Teléfono Secundario' && employee[key] === '' && !first) || (key === 'Correo Electrónico' && !isEmailValid(employee[key]) && !first)}
-              helperText={(key !== 'Teléfono Secundario' &&  employee[key] === '' && !first) ? 'Campo requerido.' : (key === 'Correo Electrónico' && !isEmailValid(employee[key]) && !first ? 'Formato de correo electrónico inválido.' : '')}
+              required={key !== 'phoneNumber2'}
+              error={(key !== 'phoneNumber2' && employee[key] === '' && !first) || (key === 'email' && !isEmailValid(employee[key]) && !first)}
+              helperText={(key !== 'phoneNumber2' &&  employee[key] === '' && !first) ? 'Campo requerido.' : (key === 'email' && !isEmailValid(employee[key]) && !first ? 'Formato de correo electrónico inválido.' : '')}
               name={key}
               value={employee[key]}
               onChange={handleInputChange}
