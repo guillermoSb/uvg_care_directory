@@ -9,25 +9,38 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useFetchEmployees } from '../hooks/useFetchEmployees';
 import { Typography, Button } from '@mui/material';
+import AddEmployeeDialog from './AddEmployeeDialog';
 
 
 export default function BasicTable({ search }) {
 
   const { employees, isLoading } = useFetchEmployees(search);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   if (isLoading) {
-    return <div>Loading...</div>;  
+    return <div>Cargando...</div>;  
   }
 
   return (
     <Box sx={{ margin: '2em', marginTop: '3em' }}>
       
+      <AddEmployeeDialog open={open} handleClose={handleClose} />
+  
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1em'}}>
-        <Button variant="outlined">
+        <Button 
+          variant="outlined"
+          onClick={handleClickOpen}>
           Agregar trabajador
         </Button>
       </Box>
-
 
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
