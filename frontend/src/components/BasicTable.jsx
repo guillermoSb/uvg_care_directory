@@ -38,7 +38,7 @@ export default function BasicTable({ search }) {
         <Button 
           variant="outlined"
           onClick={handleClickOpen}>
-          Agregar trabajador
+          Agregar empleado
         </Button>
       </Box>
 
@@ -53,7 +53,7 @@ export default function BasicTable({ search }) {
               <TableCell align="right">Puesto</TableCell>
               <TableCell align="right">Correo</TableCell>
               <TableCell align="right">Teléfono</TableCell>
-              <TableCell align="right">Teléfono 2</TableCell>
+              <TableCell align="right">Teléfono Secundario</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

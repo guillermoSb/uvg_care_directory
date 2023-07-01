@@ -13,25 +13,89 @@ export default function AddEmployeeDialog({ open, handleClose }) {
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Subscribe</DialogTitle>
+        <DialogTitle>Agregar información de empleado</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To subscribe to this website, please enter your email address here. We
-            will send updates occasionally.
+          Para añadir datos de un empleado, por favor proporcione 
+          la información en los campos siguientes.
           </DialogContentText>
+
           <TextField
             autoFocus
             margin="dense"
-            id="name"
-            label="Email Address"
+            label="Código"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
+
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Nombre"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
+
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Apellido"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
+
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Dirección"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
+
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Puesto"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
+
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Correo Electrónico"
             type="email"
             fullWidth
             variant="standard"
           />
+
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Teléfono"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
+
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Teléfono Secundario"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
+
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button>
+          <Button onClick={handleClose}>Cancelar</Button>
+          <Button onClick={handleClose}>Aceptar</Button>
         </DialogActions>
       </Dialog>
     </div>
