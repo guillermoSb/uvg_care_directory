@@ -6,6 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { editEmployee } from '../helpers/editEmployee';
 
 
 export default function EditEmployeeDialog({ open, handleClose, employeeData }) {
@@ -50,18 +51,11 @@ export default function EditEmployeeDialog({ open, handleClose, employeeData }) 
 
     if (!isFormEmpty() && !first && isEmailValid(employee['email'])) {
       handleClose();
-    //   addEmployee(employee);
-      setEmployee({
-        'employeeCode': '',
-        'name': '',
-        'lastName': '',
-        'location': '',
-        'position': '',
-        'email': '',
-        'phoneNumber': '',
-        'phoneNumber2': ''
-      });
-      setFirst(true);
+      const employeeCode = employee['employeeCode'];
+      const employeeDataa = { ...employee };
+      delete employeeDataa['employeeCode'];
+
+      editEmployee(employeeCode, employeeDataa);
     }
   };
 
