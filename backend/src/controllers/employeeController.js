@@ -43,6 +43,13 @@ const updateEmployee = async (req, res) => {
 	const { employeeCode } = req.params;
 	const { name, lastName, location, position, email, phoneNumber, phoneNumber2 } = req.body;
 	const employeeIndex = datasource.findIndex(employee => employee.employeeCode === employeeCode);
+
+	const emailExists = datasource.find(employee => employee.email === email);
+	if (emailExists) {
+		return res.status(400).json({
+			message: 'Ya existe un empleado con este correo',
+		})
+	}
 	
 	datasource[employeeIndex] = new Employee(employeeCode, name, lastName, location, position, email, phoneNumber, phoneNumber2);
 	return res.status(200).json({

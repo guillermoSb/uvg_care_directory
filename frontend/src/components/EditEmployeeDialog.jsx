@@ -6,6 +6,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+
 import { editEmployee } from '../helpers/editEmployee';
 
 
@@ -13,6 +16,8 @@ export default function EditEmployeeDialog({ open, handleClose, employeeData }) 
   
   const [employee, setEmployee] = React.useState(employeeData);
   const [first, setFirst] = React.useState(true);
+  const [errorMessage, setErrorMessage] = React.useState('');
+
 
   React.useEffect(() => {
     setEmployee(employeeData);
@@ -43,23 +48,41 @@ export default function EditEmployeeDialog({ open, handleClose, employeeData }) 
     return re.test(email);
   }
 
-  const handleAccept = () => {
+  const handleAccept = async () => {
     if (first) {
       setFirst(false);
       return;
     }
 
     if (!isFormEmpty() && !first && isEmailValid(employee['email'])) {
-      handleClose();
+      // handleClose();
       const employeeCode = employee['employeeCode'];
       const employeeDataa = { ...employee };
       delete employeeDataa['employeeCode'];
 
-      editEmployee(employeeCode, employeeDataa);
+      // editEmployee(employeeCode, employeeDataa);
+
+      const response = await editEmployee(employeeCode, employeeDataa);
+
+      if (!response.ok) {
+        const resBody = await response.json();
+        setErrorMessage(resBody.message);
+      } else {
+        handleClose();
+      }
     }
   };
 
   return (
+    <>
+    <Snackbar open={errorMessage !== ''} autoHideDuration={4000} onClose={() => setErrorMessage('')}>
+      <Alert onClose={() => setErrorMessage('')} severity="error" sx={{ width: '100%' }}>
+        {errorMessage}
+      </Alert>
+    </Snackbar>
+
+      {/* {errorMessage !== '' && <Alert severity="error">{errorMessage}</Alert>} */}
+    
     <div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Editar información de empleado</DialogTitle>
@@ -106,5 +129,6 @@ export default function EditEmployeeDialog({ open, handleClose, employeeData }) 
         </DialogActions>
       </Dialog>
     </div>
+    </>
   );
 }
