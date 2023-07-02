@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const { fetchAllEmployees, removeEmployee, addEmployee } = require('./controllers/employeeController');
+const { fetchAllEmployees, removeEmployee, addEmployee, deleteAllEmployees } = require('./controllers/employeeController');
 
 const app = express();
 
@@ -12,6 +12,7 @@ app.use(bodyParser.json());
 app.get('/employees', fetchAllEmployees);
 app.post('/employees', addEmployee);
 app.delete('/employees/:employeeCode', removeEmployee);
+app.delete('/employees', deleteAllEmployees);
 
 // Start Listening
 app.listen(process.env.PORT || 3000, () => {

@@ -30,6 +30,14 @@ const removeEmployee = async (req, res) => {
 	})
 }
 
+const deleteAllEmployees = async (req, res) => {
+	datasource = [];
+	return res.status(200).json({
+		employees: datasource.map(employee => employee.toJSON()),
+	})
+}
+
+
 const updateEmployee = async (req, res) => {
 	throw new Error('Not implemented');
 }
@@ -38,4 +46,4 @@ const searchEmployee = async (req, res) => {
 }
 
 
-module.exports = { fetchAllEmployees, addEmployee, removeEmployee, updateEmployee, searchEmployee };
+module.exports = { fetchAllEmployees, addEmployee, removeEmployee, updateEmployee, searchEmployee, deleteAllEmployees };
