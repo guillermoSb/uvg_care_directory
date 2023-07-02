@@ -39,8 +39,17 @@ const deleteAllEmployees = async (req, res) => {
 
 
 const updateEmployee = async (req, res) => {
-	throw new Error('Not implemented');
+
+	const { employeeCode } = req.params;
+	const { name, lastName, location, position, email, phoneNumber, phoneNumber2 } = req.body;
+	const employeeIndex = datasource.findIndex(employee => employee.employeeCode === employeeCode);
+	
+	datasource[employeeIndex] = new Employee(employeeCode, name, lastName, location, position, email, phoneNumber, phoneNumber2);
+	return res.status(200).json({
+		employees: datasource.map(employee => employee.toJSON()),
+	})
 }
+
 const searchEmployee = async (req, res) => {
 	throw new Error('Not implemented');
 }
