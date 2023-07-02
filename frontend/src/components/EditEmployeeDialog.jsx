@@ -6,7 +6,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-// import { addEmployee } from '../helpers/addEmployee';
 
 
 export default function EditEmployeeDialog({ open, handleClose, employeeData }) {
@@ -69,7 +68,7 @@ export default function EditEmployeeDialog({ open, handleClose, employeeData }) 
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Agregar información de empleado</DialogTitle>
+        <DialogTitle>Editar información de empleado</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Para editar datos de un empleado, por favor proporcione 
@@ -94,7 +93,7 @@ export default function EditEmployeeDialog({ open, handleClose, employeeData }) 
               type={key === 'email' ? 'email' : 'text'}
               fullWidth
               variant="standard"
-              required={key !== 'phoneNumber2'}
+              required={key !== 'phoneNumber2' && key !== 'employeeCode'}
               error={(key !== 'phoneNumber2' && employee[key] === '' && !first) || 
                      (key === 'email' && !isEmailValid(employee[key]) && !first)}
                      
@@ -103,6 +102,7 @@ export default function EditEmployeeDialog({ open, handleClose, employeeData }) 
               name={key}
               value={employee[key]}
               onChange={handleInputChange}
+              disabled={key === 'employeeCode'}
             />
           ))}
         </DialogContent>
