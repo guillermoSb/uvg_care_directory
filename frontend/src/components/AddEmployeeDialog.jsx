@@ -58,6 +58,17 @@ export default function AddEmployeeDialog({ open, handleClose }) {
     if (!isFormEmpty() && !first && isEmailValid(employee['email'])) {
       handleClose();
       addEmployee(employee);
+      setEmployee({
+        'employeeCode': '',
+        'name': '',
+        'lastName': '',
+        'location': '',
+        'position': '',
+        'email': '',
+        'phoneNumber': '',
+        'phoneNumber2': ''
+      });
+      setFirst(true);
     }
   };
 
