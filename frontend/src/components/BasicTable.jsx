@@ -12,6 +12,7 @@ import { Typography, Button } from '@mui/material';
 import AddEmployeeDialog from './AddEmployeeDialog';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { deleteEmployee } from '../helpers/deleteEmployee';
 
 
 export default function BasicTable({ search }) {
@@ -25,6 +26,10 @@ export default function BasicTable({ search }) {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleDeleteEmployee = (employeeCode) => {
+    deleteEmployee(employeeCode);
   };
 
   if (isLoading) {
@@ -81,7 +86,10 @@ export default function BasicTable({ search }) {
                 </TableCell>
                 
                 <TableCell align="right">
-                  <Button variant="text">
+                  <Button 
+                    variant="text"
+                    onClick={() => handleDeleteEmployee(employee.employeeCode)}
+                    >
                     <DeleteIcon /> 
                   </Button>
                 </TableCell>
