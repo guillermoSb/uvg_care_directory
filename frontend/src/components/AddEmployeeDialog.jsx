@@ -58,8 +58,6 @@ export default function AddEmployeeDialog({ open, handleClose }) {
     if (!isFormEmpty() && !first && isEmailValid(employee['email'])) {
       handleClose();
       addEmployee(employee);
-
-      // console.log(employee);
     }
   };
 

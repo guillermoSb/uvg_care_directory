@@ -1,20 +1,20 @@
 import { useState, useEffect } from "react";
 import { getEmployees } from "../helpers/getEmployees";
 
-export const useFetchEmployees = ( search ) => {
+export const useFetchEmployees = () => {
 
     const [employees, setEmployees] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
     const getEmployeesData = async () => {
-        const employeeData = await getEmployees(search);
+        const employeeData = await getEmployees();
         setEmployees(employeeData);
         setLoading(false);
     }
 
     useEffect(() => {
-        getEmployeesData(search);
-    }, [search]);  
+        getEmployeesData();
+    }, [employees]);  
     
     return {
         employees,
