@@ -10,6 +10,8 @@ import Paper from '@mui/material/Paper';
 import { useFetchEmployees } from '../hooks/useFetchEmployees';
 import { Typography, Button } from '@mui/material';
 import AddEmployeeDialog from './AddEmployeeDialog';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 
 export default function BasicTable({ search }) {
@@ -54,6 +56,8 @@ export default function BasicTable({ search }) {
               <TableCell align="right">Correo</TableCell>
               <TableCell align="right">Teléfono</TableCell>
               <TableCell align="right">Teléfono Secundario</TableCell>
+              <TableCell align="right"></TableCell>
+              <TableCell align="right"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -70,6 +74,17 @@ export default function BasicTable({ search }) {
                 <TableCell align="right">{employee.email}</TableCell>
                 <TableCell align="right">{employee.phoneNumber}</TableCell>
                 <TableCell align="right">{employee.phoneNumber2}</TableCell>
+                <TableCell align="right">
+                  <Button variant="text">
+                    <EditIcon />
+                  </Button>
+                </TableCell>
+                
+                <TableCell align="right">
+                  <Button variant="text">
+                    <DeleteIcon /> 
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

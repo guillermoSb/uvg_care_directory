@@ -101,8 +101,11 @@ export default function AddEmployeeDialog({ open, handleClose }) {
               fullWidth
               variant="standard"
               required={key !== 'phoneNumber2'}
-              error={(key !== 'phoneNumber2' && employee[key] === '' && !first) || (key === 'email' && !isEmailValid(employee[key]) && !first)}
-              helperText={(key !== 'phoneNumber2' &&  employee[key] === '' && !first) ? 'Campo requerido.' : (key === 'email' && !isEmailValid(employee[key]) && !first ? 'Formato de correo electrónico inválido.' : '')}
+              error={(key !== 'phoneNumber2' && employee[key] === '' && !first) || 
+                     (key === 'email' && !isEmailValid(employee[key]) && !first)}
+                     
+              helperText={(key !== 'phoneNumber2' &&  employee[key] === '' && !first) ? 'Campo requerido.' : 
+                          (key === 'email' && !isEmailValid(employee[key]) && !first ? 'Formato de correo electrónico inválido.' : '')}
               name={key}
               value={employee[key]}
               onChange={handleInputChange}
