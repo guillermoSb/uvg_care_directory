@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import { useFetchEmployees } from '../hooks/useFetchEmployees';
 import { Typography, Button } from '@mui/material';
 import AddEmployeeDialog from './AddEmployeeDialog';
+import EditEmployeeDialog from './EditEmployeeDialog';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { deleteEmployee } from '../helpers/deleteEmployee';
@@ -18,14 +19,25 @@ import { deleteEmployee } from '../helpers/deleteEmployee';
 export default function BasicTable({ search }) {
 
   const { employees, isLoading } = useFetchEmployees(search);
-  const [open, setOpen] = React.useState(false);
+  const [selectedEmployee, setSelectedEmployee] = React.useState({});
+  const [openAddEmployee, setOpenAddEmployee] = React.useState(false);
+  const [openEditEmployee, setOpenEditEmployee] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleClickOpenAdd = () => {
+    setOpenAddEmployee(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleCloseAdd = () => {
+    setOpenAddEmployee(false);
+  };
+
+  const handleClickOpenEdit = (selectedEmployeeData) => {
+    setSelectedEmployee(selectedEmployeeData);
+    setOpenEditEmployee(true);
+  };
+
+  const handleCloseEdit = () => {
+    setOpenEditEmployee(false);
   };
 
   const handleDeleteEmployee = (employeeCode) => {
@@ -39,12 +51,14 @@ export default function BasicTable({ search }) {
   return (
     <Box sx={{ margin: '2em', marginTop: '3em' }}>
       
-      <AddEmployeeDialog open={open} handleClose={handleClose} />
+      <AddEmployeeDialog open={openAddEmployee} handleClose={handleCloseAdd} />
+      <EditEmployeeDialog open={openEditEmployee} handleClose={handleCloseEdit} employeeData={selectedEmployee} />
+
   
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1em'}}>
         <Button 
           variant="outlined"
-          onClick={handleClickOpen}>
+          onClick={handleClickOpenAdd}>
           Agregar empleado
         </Button>
       </Box>
@@ -80,7 +94,10 @@ export default function BasicTable({ search }) {
                 <TableCell align="right">{employee.phoneNumber}</TableCell>
                 <TableCell align="right">{employee.phoneNumber2}</TableCell>
                 <TableCell align="right">
-                  <Button variant="text">
+                  <Button 
+                    variant="text"
+                    onClick={() => handleClickOpenEdit(employee)}
+                    >                    
                     <EditIcon />
                   </Button>
                 </TableCell>
