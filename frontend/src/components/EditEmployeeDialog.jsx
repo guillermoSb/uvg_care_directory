@@ -15,12 +15,15 @@ import { editEmployee } from '../helpers/editEmployee';
 export default function EditEmployeeDialog({ open, handleClose, employeeData, setSucessEditSnackbar }) {
   
   const [employee, setEmployee] = React.useState(employeeData);
+  const [prevData, setPrevData] = React.useState(employeeData);
+
   const [first, setFirst] = React.useState(true);
   const [editError, setEditError] = React.useState('');
 
 
   React.useEffect(() => {
     setEmployee(employeeData);
+    setPrevData(employeeData);
   }, [employeeData]);
 
   const handleInputChange = (event) => {
@@ -48,6 +51,16 @@ export default function EditEmployeeDialog({ open, handleClose, employeeData, se
     return re.test(email);
   }
 
+  const isDataChanged = () => {
+    for (let key in employee) {
+      if (employee[key] !== prevData[key]) {
+        return true;
+      }
+    }
+    return false;
+  };
+  
+
   const handleAccept = async () => {
     if (first) {
       setFirst(false);
@@ -66,7 +79,9 @@ export default function EditEmployeeDialog({ open, handleClose, employeeData, se
         setEditError(resBody.message);
       } else {
         handleClose();
-        setSucessEditSnackbar(true);
+        if (isDataChanged()) {
+          setSucessEditSnackbar(true);
+        }
       }
     }
   };
