@@ -134,7 +134,7 @@ export default function EditEmployeeDialog({ open, handleClose, employeeData, se
                     (key === 'email' && !isEmailValid(employee[key]))}
                     
               helperText={(key !== 'phoneNumber2' &&  employee[key] === '') ? 'Campo requerido.' : 
-                          (key === 'email' && !isEmailValid(employee[key]) ? 'Formato de correo electrónico inválido.' : '')}
+                          (key === 'email' && !isEmailValid(employee[key]) ? 'Correo electrónico inválido.' : '')}
               name={key}
               value={employee[key]}
               onChange={handleInputChange}
