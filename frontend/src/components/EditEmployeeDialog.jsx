@@ -17,8 +17,8 @@ export default function EditEmployeeDialog({ open, handleClose, employeeData, se
   const [employee, setEmployee] = React.useState(employeeData);
   const [prevData, setPrevData] = React.useState(employeeData);
 
-  const [first, setFirst] = React.useState(true);
   const [editError, setEditError] = React.useState('');
+  const [infoEditSnackbar, setInfoEditSnackbar] = React.useState(false);
 
 
   React.useEffect(() => {
@@ -62,12 +62,8 @@ export default function EditEmployeeDialog({ open, handleClose, employeeData, se
   
 
   const handleAccept = async () => {
-    if (first) {
-      setFirst(false);
-      return;
-    }
 
-    if (!isFormEmpty() && !first && isEmailValid(employee['email'])) {
+    if (!isFormEmpty() && isEmailValid(employee['email'])) {
       const employeeCode = employee['employeeCode'];
       const employeeDataa = { ...employee };
       delete employeeDataa['employeeCode'];
@@ -84,6 +80,11 @@ export default function EditEmployeeDialog({ open, handleClose, employeeData, se
         }
       }
     }
+
+    if (isFormEmpty()) {
+      setInfoEditSnackbar(true);
+    }
+
   };
 
   return (
@@ -93,6 +94,13 @@ export default function EditEmployeeDialog({ open, handleClose, employeeData, se
         {editError}
       </Alert>
     </Snackbar>
+
+    <Snackbar open={infoEditSnackbar} autoHideDuration={6000} onClose={() => setInfoEditSnackbar(false)}>
+      <Alert onClose={() => setInfoEditSnackbar(false)} severity="info" sx={{ width: '100%' }}>
+        Por favor, llene todos los campos requeridos.
+      </Alert>
+    </Snackbar>
+
 
     <div>
       <Dialog open={open} onClose={handleClose}>
@@ -122,17 +130,19 @@ export default function EditEmployeeDialog({ open, handleClose, employeeData, se
               fullWidth
               variant="standard"
               required={key !== 'phoneNumber2' && key !== 'employeeCode'}
-              error={(key !== 'phoneNumber2' && employee[key] === '' && !first) || 
-                     (key === 'email' && !isEmailValid(employee[key]) && !first)}
-                     
-              helperText={(key !== 'phoneNumber2' &&  employee[key] === '' && !first) ? 'Campo requerido.' : 
-                          (key === 'email' && !isEmailValid(employee[key]) && !first ? 'Formato de correo electrónico inválido.' : '')}
+              error={(key !== 'phoneNumber2' && employee[key] === '') || 
+                    (key === 'email' && !isEmailValid(employee[key]))}
+                    
+              helperText={(key !== 'phoneNumber2' &&  employee[key] === '') ? 'Campo requerido.' : 
+                          (key === 'email' && !isEmailValid(employee[key]) ? 'Formato de correo electrónico inválido.' : '')}
               name={key}
               value={employee[key]}
               onChange={handleInputChange}
+              onBlur={handleInputChange}  // perform validation when losing focus
               disabled={key === 'employeeCode'}
             />
-          ))}
+        ))}
+
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancelar</Button>
