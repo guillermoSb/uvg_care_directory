@@ -44,7 +44,7 @@ const updateEmployee = async (req, res) => {
 	const { name, lastName, location, position, email, phoneNumber, phoneNumber2 } = req.body;
 	const employeeIndex = datasource.findIndex(employee => employee.employeeCode === employeeCode);
 
-	const emailExists = datasource.find(employee => employee.email === email);
+	const emailExists = datasource.find(employee => employee.email === email && employee.employeeCode !== employeeCode);
 	if (emailExists) {
 		return res.status(400).json({
 			message: 'Ya existe un empleado con este correo',
