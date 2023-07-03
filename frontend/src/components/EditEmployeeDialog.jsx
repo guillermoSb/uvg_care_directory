@@ -12,11 +12,11 @@ import Snackbar from '@mui/material/Snackbar';
 import { editEmployee } from '../helpers/editEmployee';
 
 
-export default function EditEmployeeDialog({ open, handleClose, employeeData }) {
+export default function EditEmployeeDialog({ open, handleClose, employeeData, setSucessEditSnackbar }) {
   
   const [employee, setEmployee] = React.useState(employeeData);
   const [first, setFirst] = React.useState(true);
-  const [errorMessage, setErrorMessage] = React.useState('');
+  const [editError, setEditError] = React.useState('');
 
 
   React.useEffect(() => {
@@ -55,34 +55,30 @@ export default function EditEmployeeDialog({ open, handleClose, employeeData }) 
     }
 
     if (!isFormEmpty() && !first && isEmailValid(employee['email'])) {
-      // handleClose();
       const employeeCode = employee['employeeCode'];
       const employeeDataa = { ...employee };
       delete employeeDataa['employeeCode'];
-
-      // editEmployee(employeeCode, employeeDataa);
 
       const response = await editEmployee(employeeCode, employeeDataa);
 
       if (!response.ok) {
         const resBody = await response.json();
-        setErrorMessage(resBody.message);
+        setEditError(resBody.message);
       } else {
         handleClose();
+        setSucessEditSnackbar(true);
       }
     }
   };
 
   return (
     <>
-    <Snackbar open={errorMessage !== ''} autoHideDuration={4000} onClose={() => setErrorMessage('')}>
-      <Alert onClose={() => setErrorMessage('')} severity="error" sx={{ width: '100%' }}>
-        {errorMessage}
+    <Snackbar open={editError !== ''} autoHideDuration={4000} onClose={() => setEditError('')}>
+      <Alert onClose={() => setEditError('')} severity="error" sx={{ width: '100%' }}>
+        {editError}
       </Alert>
     </Snackbar>
 
-      {/* {errorMessage !== '' && <Alert severity="error">{errorMessage}</Alert>} */}
-    
     <div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Editar información de empleado</DialogTitle>

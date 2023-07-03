@@ -13,6 +13,9 @@ import AddEmployeeDialog from './AddEmployeeDialog';
 import EditEmployeeDialog from './EditEmployeeDialog';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+
 import { deleteEmployee } from '../helpers/deleteEmployee';
 
 
@@ -21,7 +24,10 @@ export default function BasicTable({ search }) {
   const { employees, isLoading } = useFetchEmployees(search);
   const [selectedEmployee, setSelectedEmployee] = React.useState({});
   const [openAddEmployee, setOpenAddEmployee] = React.useState(false);
+
   const [openEditEmployee, setOpenEditEmployee] = React.useState(false);
+  const [sucessEditSnackbar, setSucessEditSnackbar] = React.useState(false);
+
 
   const handleClickOpenAdd = () => {
     setOpenAddEmployee(true);
@@ -50,9 +56,24 @@ export default function BasicTable({ search }) {
 
   return (
     <Box sx={{ margin: '2em', marginTop: '3em' }}>
-      
+
+      <Snackbar
+        open={sucessEditSnackbar}
+        autoHideDuration={6000}
+        onClose={() => setSucessEditSnackbar(false)}
+      >
+        <Alert onClose={() => setSucessEditSnackbar(false)} severity="success" sx={{ width: '100%' }}>
+          Empleado editado con éxito.
+        </Alert>
+      </Snackbar>
+
       <AddEmployeeDialog open={openAddEmployee} handleClose={handleCloseAdd} />
-      <EditEmployeeDialog open={openEditEmployee} handleClose={handleCloseEdit} employeeData={selectedEmployee} />
+      <EditEmployeeDialog 
+        open={openEditEmployee} 
+        handleClose={handleCloseEdit} 
+        employeeData={selectedEmployee} 
+        setSucessEditSnackbar={setSucessEditSnackbar}
+        />
 
   
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1em'}}>
