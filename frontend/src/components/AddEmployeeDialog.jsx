@@ -74,6 +74,16 @@ export default function AddEmployeeDialog({ open, handleClose }) {
 
   const handleCancel = () => {
     handleClose();
+    setEmployee({
+      'employeeCode': '',
+      'name': '',
+      'lastName': '',
+      'location': '',
+      'position': '',
+      'email': '',
+      'phoneNumber': '',
+      'phoneNumber2': ''
+    });
     setFirst(true);
   };
 
