@@ -14,18 +14,9 @@ import { editEmployee } from '../helpers/editEmployee';
 
 export default function EditEmployeeDialog({ open, handleClose, employeeData, setSucessEditSnackbar }) {
   
-  const [employee, setEmployee] = React.useState({
-    employeeCode: employeeData ? employeeData['employeeCode'] : '',
-    name: employeeData ? employeeData['name'] : '',
-    lastName: employeeData ? employeeData['lastName'] : '',
-    location: employeeData ? employeeData['location'] : '',
-    position: employeeData ? employeeData['position'] : '',
-    email: employeeData ? employeeData['email'] : '',
-    phoneNumber: employeeData ? employeeData['phoneNumber'] : '',
-    phoneNumber2: employeeData ? employeeData['phoneNumber2'] : ''
-  });
-    
+  const [employee, setEmployee] = React.useState(employeeData);
   const [prevData, setPrevData] = React.useState(employeeData);
+
   const [editError, setEditError] = React.useState('');
   const [infoEditSnackbar, setInfoEditSnackbar] = React.useState(false);
   const [infoMessage, setInfoMessage] = React.useState('');
@@ -43,6 +34,7 @@ export default function EditEmployeeDialog({ open, handleClose, employeeData, se
   };  
 
   const isFormEmpty = () => {
+
     let fields = { ...employee };
     delete fields['phoneNumber2'];
 
@@ -60,8 +52,6 @@ export default function EditEmployeeDialog({ open, handleClose, employeeData, se
   }
 
   const isDataChanged = () => {
-    console.log(employee);
-    console.log(prevData);
     for (let key in employee) {
       if (employee[key] !== prevData[key]) {
         return true;
