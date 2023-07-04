@@ -15,6 +15,25 @@ const fetchAllEmployees = async (req, res) => {
 
 const addEmployee = async (req, res) => {
 	const { employeeCode, name, lastName, location, position, email, phoneNumber, phoneNumber2 } = req.body;
+
+	const errors = [];
+
+    const emailExists = datasource.find(employee => employee.email === email);
+    if (emailExists) {
+        errors.push('Ya existe un empleado con este correo.');
+    }
+
+    const employeeCodeExists = datasource.find(employee => employee.employeeCode === employeeCode);
+    if (employeeCodeExists) {
+        errors.push('Ya existe un empleado con este código.');
+    }
+
+    if (errors.length > 0) {
+        return res.status(400).json({
+            errors: errors,
+        });
+    }
+
 	const newEmployee = new Employee(employeeCode, name, lastName, location, position, email, phoneNumber, phoneNumber2);
 	datasource.push(newEmployee);
 	return res.status(200).json({
