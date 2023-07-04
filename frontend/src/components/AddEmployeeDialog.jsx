@@ -6,6 +6,10 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+
+
 import { addEmployee } from '../helpers/addEmployee';
 
 
@@ -23,6 +27,9 @@ export default function AddEmployeeDialog({ open, handleClose }) {
   });
 
   const [first, setFirst] = React.useState(true);
+
+  const [infoCreateSnackbar, setInfoCreateSnackbar] = React.useState(false);
+  const [infoMessage, setInfoMessage] = React.useState('');
 
   const handleInputChange = (event) => {
     setEmployee({
@@ -52,7 +59,6 @@ export default function AddEmployeeDialog({ open, handleClose }) {
   const handleAccept = () => {
     if (first) {
       setFirst(false);
-      return;
     }
 
     if (!isFormEmpty() && !first && isEmailValid(employee['email'])) {
@@ -69,6 +75,10 @@ export default function AddEmployeeDialog({ open, handleClose }) {
         'phoneNumber2': ''
       });
       setFirst(true);
+    }
+    if (isFormEmpty()) {
+      setInfoMessage('Por favor, llene todos los campos.');
+      setInfoCreateSnackbar(true);
     }
   };
 
@@ -89,6 +99,22 @@ export default function AddEmployeeDialog({ open, handleClose }) {
 
   return (
     <div>
+
+      <Snackbar
+        open = {infoCreateSnackbar} 
+        autoHideDuration = {4000}
+        onClose = {() => setInfoCreateSnackbar(false)}
+      >
+        <Alert
+          onClose = {() => setInfoCreateSnackbar(false)}
+          severity = 'info'
+          sx = {{ width: '100%' }}
+        >
+          {infoMessage}
+        </Alert>
+      </Snackbar>
+
+
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Agregar información de empleado</DialogTitle>
         <DialogContent>
