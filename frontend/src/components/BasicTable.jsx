@@ -51,7 +51,7 @@ export default function BasicTable({ search }) {
   };
 
   if (isLoading) {
-    return <div>Cargando...</div>;  
+    return <Typography>Cargando...</Typography>;  
   }
 
   return (
@@ -59,7 +59,7 @@ export default function BasicTable({ search }) {
 
       <Snackbar
         open={sucessEditSnackbar}
-        autoHideDuration={6000}
+        autoHideDuration={4000}
         onClose={() => setSucessEditSnackbar(false)}
       >
         <Alert onClose={() => setSucessEditSnackbar(false)} severity="success" sx={{ width: '100%' }}>

@@ -72,6 +72,11 @@ export default function AddEmployeeDialog({ open, handleClose }) {
     }
   };
 
+  const handleCancel = () => {
+    handleClose();
+    setFirst(true);
+  };
+
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
@@ -113,7 +118,7 @@ export default function AddEmployeeDialog({ open, handleClose }) {
           ))}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancelar</Button>
+          <Button onClick={handleCancel}>Cancelar</Button>
           <Button onClick={handleAccept}>Aceptar</Button>
         </DialogActions>
       </Dialog>
