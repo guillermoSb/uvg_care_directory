@@ -47,7 +47,7 @@ const updateEmployee = async (req, res) => {
 	const emailExists = datasource.find(employee => employee.email === email && employee.employeeCode !== employeeCode);
 	if (emailExists) {
 		return res.status(400).json({
-			message: 'Ya existe un empleado con este correo',
+			message: 'Ya existe un empleado con este correo.',
 		})
 	}
 	
