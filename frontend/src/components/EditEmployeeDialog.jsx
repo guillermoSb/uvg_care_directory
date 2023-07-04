@@ -19,7 +19,7 @@ export default function EditEmployeeDialog({ open, handleClose, employeeData, se
 
   const [editError, setEditError] = React.useState('');
   const [infoEditSnackbar, setInfoEditSnackbar] = React.useState(false);
-
+  const [infoMessage, setInfoMessage] = React.useState('');
 
   React.useEffect(() => {
     setEmployee(employeeData);
@@ -74,15 +74,20 @@ export default function EditEmployeeDialog({ open, handleClose, employeeData, se
         const resBody = await response.json();
         setEditError(resBody.message);
       } else {
-        handleClose();
+        
         if (isDataChanged()) {
+          handleClose();
           setSucessEditSnackbar(true);
+        } else {
+          setInfoEditSnackbar(true);
+          setInfoMessage('No se ha modificado ningún dato.');
         }
       }
     }
 
     if (isFormEmpty()) {
       setInfoEditSnackbar(true);
+      setInfoMessage('Por favor, llene todos los campos requeridos.');
     }
 
   };
@@ -97,7 +102,7 @@ export default function EditEmployeeDialog({ open, handleClose, employeeData, se
 
     <Snackbar open={infoEditSnackbar} autoHideDuration={6000} onClose={() => setInfoEditSnackbar(false)}>
       <Alert onClose={() => setInfoEditSnackbar(false)} severity="info" sx={{ width: '100%' }}>
-        Por favor, llene todos los campos requeridos.
+        {infoMessage}
       </Alert>
     </Snackbar>
 
@@ -138,7 +143,7 @@ export default function EditEmployeeDialog({ open, handleClose, employeeData, se
               name={key}
               value={employee[key]}
               onChange={handleInputChange}
-              onBlur={handleInputChange}  // perform validation when losing focus
+              onBlur={handleInputChange}
               disabled={key === 'employeeCode'}
             />
         ))}
