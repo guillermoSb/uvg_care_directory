@@ -14,8 +14,18 @@ import { editEmployee } from '../helpers/editEmployee';
 
 export default function EditEmployeeDialog({ open, handleClose, employeeData, setSucessEditSnackbar }) {
   
-  const [employee, setEmployee] = React.useState(employeeData);
-  const [prevData, setPrevData] = React.useState(employeeData);
+  const [employee, setEmployee] = React.useState({
+    email: '',
+    employeeCode: '',
+    lastName: '',
+    location: '',
+    name: '',
+    phoneNumber: '',
+    phoneNumber2: '',
+    position: '',
+    ...employeeData,
+  });
+  const [prevData, setPrevData] = React.useState({ ...employee });
 
   const [editError, setEditError] = React.useState('');
   const [infoEditSnackbar, setInfoEditSnackbar] = React.useState(false);
@@ -53,12 +63,13 @@ export default function EditEmployeeDialog({ open, handleClose, employeeData, se
 
   const isDataChanged = () => {
     for (let key in employee) {
-      if (employee[key] !== prevData[key]) {
+      if ((employee[key] || '') !== (prevData[key] || '')) {
         return true;
       }
     }
     return false;
   };
+  
   
 
   const handleAccept = async () => {
