@@ -7,14 +7,17 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useFetchEmployees } from '../hooks/useFetchEmployees';
 import { Typography, Button } from '@mui/material';
-import AddEmployeeDialog from './AddEmployeeDialog';
-import EditEmployeeDialog from './EditEmployeeDialog';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+
+import AddEmployeeDialog from './AddEmployeeDialog';
+import EditEmployeeDialog from './EditEmployeeDialog';
+import DeleteEmployeeDialog from './DeleteEmployeeDialog';
+
+import { useFetchEmployees } from '../hooks/useFetchEmployees';
 
 import { deleteEmployee } from '../helpers/deleteEmployee';
 
@@ -26,6 +29,7 @@ export default function BasicTable({ search }) {
 
   const [openAddEmployee, setOpenAddEmployee] = React.useState(false);
   const [openEditEmployee, setOpenEditEmployee] = React.useState(false);
+  const [openDeleteEmployee, setOpenDeleteEmployee] = React.useState(false);
   
   const [sucessEditSnackbar, setSucessEditSnackbar] = React.useState(false);
   const [successCreateSnackbar, setSuccessCreateSnackbar] = React.useState(false);
@@ -40,7 +44,6 @@ export default function BasicTable({ search }) {
   };
 
   const handleClickOpenEdit = (selectedEmployeeData) => {
-    
     selectedEmployeeData.phoneNumber2 = selectedEmployeeData.phoneNumber2 || '';
     setSelectedEmployee(selectedEmployeeData);
     setOpenEditEmployee(true);
@@ -50,9 +53,19 @@ export default function BasicTable({ search }) {
     setOpenEditEmployee(false);
   };
 
-  const handleDeleteEmployee = (employeeCode) => {
-    deleteEmployee(employeeCode);
+  const handleClickOpenDelete = (selectedEmployeeData) => {
+    setSelectedEmployee(selectedEmployeeData);
+    setOpenDeleteEmployee(true);
   };
+
+  const handleCloseDelete = () => {
+    setOpenDeleteEmployee(false);
+  };
+
+
+  // const handleDeleteEmployee = (employeeCode) => {
+  //   deleteEmployee(employeeCode);
+  // };
 
   if (isLoading) {
     return <Typography>Cargando...</Typography>;  
@@ -60,6 +73,11 @@ export default function BasicTable({ search }) {
 
   return (
     <Box sx={{ margin: '2em', marginTop: '3em' }}>
+
+      <DeleteEmployeeDialog 
+        open={openDeleteEmployee}
+        onClose={handleCloseDelete}
+      />
 
       <Snackbar
         open={sucessEditSnackbar}
@@ -141,7 +159,7 @@ export default function BasicTable({ search }) {
                 <TableCell align="right">
                   <Button 
                     variant="text"
-                    onClick={() => handleDeleteEmployee(employee.employeeCode)}
+                    onClick={() => handleClickOpenDelete(employee)}
                     >
                     <DeleteIcon /> 
                   </Button>
