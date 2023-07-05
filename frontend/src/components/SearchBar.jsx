@@ -26,6 +26,7 @@ export default function SearchBar({ setSearchh }) {
                   component="form"
                   noValidate
                   autoComplete="off"
+                  onSubmit={handleSearch}
                   sx={{ 
                     display: 'flex', 
                     alignItems: 'center', 
@@ -44,7 +45,7 @@ export default function SearchBar({ setSearchh }) {
                   />
                   <Button 
                     variant="contained"
-                    onClick={ handleSearch }
+                    type="submit" 
                   >
                     Buscar
                   </Button>
