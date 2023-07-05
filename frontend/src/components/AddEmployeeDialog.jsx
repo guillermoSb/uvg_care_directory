@@ -57,19 +57,24 @@ export default function AddEmployeeDialog({ open, handleClose }) {
     return re.test(email);
   }
 
+  const isCodeValid = (code) => {
+    const re = /^[0-9]+$/;
+    return re.test(code);
+  }
+
   const handleAccept = async () => {
     if (first) {
       setFirst(false);
     }
 
-    if (!isFormEmpty() && !first && isEmailValid(employee['email'])) {
+    if (!isFormEmpty() && !first && isEmailValid(employee['email']) && isCodeValid(employee['employeeCode'])) {
 
       const response = await addEmployee(employee);
 
       if (!response.ok) {
         const resBody = await response.json();
         setCreateError(resBody.errors);
-        console.log(resBody.errors);
+
       } else {
         setCreateError([]);
         handleClose();
@@ -88,6 +93,14 @@ export default function AddEmployeeDialog({ open, handleClose }) {
     }
     if (isFormEmpty()) {
       setInfoMessage('Por favor, llene todos los campos requeridos.');
+      setInfoCreateSnackbar(true);
+    }
+    if (!isEmailValid(employee['email'])) {
+      setInfoMessage('Por favor, ingrese un correo electrónico válido.');
+      setInfoCreateSnackbar(true);
+    }
+    if (!isCodeValid(employee['employeeCode'])) {
+      setInfoMessage('Solo se aceptan valores númericos para el código.');
       setInfoCreateSnackbar(true);
     }
   };
