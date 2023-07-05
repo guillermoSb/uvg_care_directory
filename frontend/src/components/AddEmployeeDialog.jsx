@@ -91,12 +91,12 @@ export default function AddEmployeeDialog({ open, handleClose, setSuccessCreateS
         setSuccessCreateSnackbar(true);
       }
     }
-    if (isFormEmpty()) {
-      setInfoMessage('Por favor, llene todos los campos requeridos.');
-      setInfoCreateSnackbar(true);
-    }
     if (!isCodeValid(employee['employeeCode'])) {
       setInfoMessage('Solo se aceptan valores númericos.');
+      setInfoCreateSnackbar(true);
+    }
+    if (isFormEmpty()) {
+      setInfoMessage('Por favor, llene todos los campos requeridos.');
       setInfoCreateSnackbar(true);
     }
   };
