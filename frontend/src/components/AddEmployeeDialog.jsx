@@ -28,6 +28,7 @@ export default function AddEmployeeDialog({ open, handleClose }) {
 
   const [first, setFirst] = React.useState(true);
 
+  const [createError, setCreateError] = React.useState([]);
   const [infoCreateSnackbar, setInfoCreateSnackbar] = React.useState(false);
   const [infoMessage, setInfoMessage] = React.useState('');
 
@@ -56,28 +57,37 @@ export default function AddEmployeeDialog({ open, handleClose }) {
     return re.test(email);
   }
 
-  const handleAccept = () => {
+  const handleAccept = async () => {
     if (first) {
       setFirst(false);
     }
 
     if (!isFormEmpty() && !first && isEmailValid(employee['email'])) {
-      handleClose();
-      addEmployee(employee);
-      setEmployee({
-        'employeeCode': '',
-        'name': '',
-        'lastName': '',
-        'location': '',
-        'position': '',
-        'email': '',
-        'phoneNumber': '',
-        'phoneNumber2': ''
-      });
-      setFirst(true);
+
+      const response = await addEmployee(employee);
+
+      if (!response.ok) {
+        const resBody = await response.json();
+        setCreateError(resBody.errors);
+        console.log(resBody.errors);
+      } else {
+        setCreateError([]);
+        handleClose();
+        setEmployee({
+          'employeeCode': '',
+          'name': '',
+          'lastName': '',
+          'location': '',
+          'position': '',
+          'email': '',
+          'phoneNumber': '',
+          'phoneNumber2': ''
+        });
+        setFirst(true);
+      }
     }
     if (isFormEmpty()) {
-      setInfoMessage('Por favor, llene todos los campos.');
+      setInfoMessage('Por favor, llene todos los campos requeridos.');
       setInfoCreateSnackbar(true);
     }
   };
@@ -113,6 +123,28 @@ export default function AddEmployeeDialog({ open, handleClose }) {
           {infoMessage}
         </Alert>
       </Snackbar>
+
+
+      {createError.length > 0 && 
+        createError.map((error, index) => (
+          <Snackbar
+            key={index} 
+            open={createError.length > 0}
+            autoHideDuration={4000}
+            onClose={() => setCreateError([])}
+          >
+            <Alert
+              onClose={() => setCreateError([])}
+              severity='error'
+              sx={{ width: '100%' }}
+            >
+              {error}
+            </Alert>
+          </Snackbar>
+        ))
+      }
+
+        
 
 
       <Dialog open={open} onClose={handleClose}>

@@ -10,7 +10,5 @@ export const addEmployee = async (employee) => {
         body: JSON.stringify(employee) 
     });
 
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-    }
+    return response;
 }
