@@ -95,8 +95,8 @@ export default function AddEmployeeDialog({ open, handleClose, setSuccessCreateS
       setInfoMessage('Por favor, llene todos los campos requeridos.');
       setInfoCreateSnackbar(true);
     }
-    if (!isCodeValid(employee['employeeCode']) && !first) {
-      setInfoMessage('Solo se aceptan valores númericos para el código.');
+    if (!isCodeValid(employee['employeeCode'])) {
+      setInfoMessage('Solo se aceptan valores númericos.');
       setInfoCreateSnackbar(true);
     }
   };
@@ -183,11 +183,16 @@ export default function AddEmployeeDialog({ open, handleClose, setSuccessCreateS
               fullWidth
               variant="standard"
               required={key !== 'phoneNumber2'}
+              
               error={(key !== 'phoneNumber2' && employee[key] === '' && !first) || 
-                     (key === 'email' && !isEmailValid(employee[key]) && !first)}
-                     
+                    (key === 'email' && !isEmailValid(employee[key]) && !first) ||
+                    (key === 'employeeCode' && !isCodeValid(employee[key]) && !first)}
+       
               helperText={(key !== 'phoneNumber2' &&  employee[key] === '' && !first) ? 'Campo requerido.' : 
-                          (key === 'email' && !isEmailValid(employee[key]) && !first ? 'Formato de correo electrónico inválido.' : '')}
+                    (key === 'email' && !isEmailValid(employee[key]) && !first) ? 'Formato de correo electrónico inválido.' :
+                    (key === 'employeeCode' && !isCodeValid(employee[key]) && !first) ? 'Código inválido.' : ''}
+        
+                    
               name={key}
               value={employee[key]}
               onChange={handleInputChange}
