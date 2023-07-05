@@ -67,7 +67,7 @@ export default function AddEmployeeDialog({ open, handleClose, setSuccessCreateS
       setFirst(false);
     }
 
-    if (!isFormEmpty() && !first && isEmailValid(employee['email']) && isCodeValid(employee['employeeCode'])) {
+    if (!isFormEmpty() && isEmailValid(employee['email']) && isCodeValid(employee['employeeCode'])) {
 
       const response = await addEmployee(employee);
 
