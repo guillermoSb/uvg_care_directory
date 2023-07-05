@@ -195,7 +195,7 @@ export default function BasicTable({ search }) {
         </TableContainer>
         
         <Pagination 
-          count={employees.length} 
+          count={Math.ceil(employees.length / 5)} 
           page={page} 
           onChange={handleChangePage}
           sx={{ display: 'flex', justifyContent: 'center', marginTop: '1em' }} 
