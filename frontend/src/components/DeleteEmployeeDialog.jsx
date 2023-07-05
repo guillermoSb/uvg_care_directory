@@ -4,14 +4,21 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import { Typography } from '@mui/material';
 
-export default function AlertDialog({ open, onClose }) {
+import { deleteEmployee } from '../helpers/deleteEmployee';
+
+
+export default function AlertDialog({ open, onClose, employeeData }) {
+
+  const handleDeleteEmployee = () => {
+    const { employeeCode } = employeeData;
+    deleteEmployee(employeeCode);
+    onClose();
+  };
 
   return (
     <div>
-      
       <Dialog
         open={open}
         aria-labelledby="alert-dialog-title"
@@ -20,13 +27,13 @@ export default function AlertDialog({ open, onClose }) {
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             <Typography variant="body1" align='center'>
-              ¿Está seguro de eliminar la información de este empleado?
+              ¿Está seguro de eliminar los datos de {employeeData.name} {employeeData.lastName}?
             </Typography>
           </DialogContentText> 
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose}>Cancelar</Button>
-          <Button onClick={onClose} autoFocus>
+          <Button onClick={handleDeleteEmployee} autoFocus>
             Aceptar
           </Button> 
         </DialogActions>

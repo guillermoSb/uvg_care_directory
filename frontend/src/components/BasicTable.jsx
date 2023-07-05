@@ -19,8 +19,6 @@ import DeleteEmployeeDialog from './DeleteEmployeeDialog';
 
 import { useFetchEmployees } from '../hooks/useFetchEmployees';
 
-import { deleteEmployee } from '../helpers/deleteEmployee';
-
 
 export default function BasicTable({ search }) {
 
@@ -63,10 +61,6 @@ export default function BasicTable({ search }) {
   };
 
 
-  // const handleDeleteEmployee = (employeeCode) => {
-  //   deleteEmployee(employeeCode);
-  // };
-
   if (isLoading) {
     return <Typography>Cargando...</Typography>;  
   }
@@ -75,6 +69,7 @@ export default function BasicTable({ search }) {
     <Box sx={{ margin: '2em', marginTop: '3em' }}>
 
       <DeleteEmployeeDialog 
+        employeeData={selectedEmployee}
         open={openDeleteEmployee}
         onClose={handleCloseDelete}
       />
