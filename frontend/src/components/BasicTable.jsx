@@ -130,6 +130,9 @@ export default function BasicTable({ search }) {
         </Button>
       </Box>
 
+      { search ? <Typography variant='h6'>
+                    Resultados para: {search}
+                  </Typography> : 
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -182,10 +185,11 @@ export default function BasicTable({ search }) {
           </TableBody>
         </Table>
       </TableContainer>
+      }
 
-      <Typography variant='body2'>
+      {/* <Typography variant='body2'>
         { search ? `Resultados para: ${search}` : '' }
-      </Typography>
+      </Typography> */}
 
     </Box>
   );
