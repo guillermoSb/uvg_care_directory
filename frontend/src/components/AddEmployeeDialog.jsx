@@ -13,7 +13,7 @@ import Snackbar from '@mui/material/Snackbar';
 import { addEmployee } from '../helpers/addEmployee';
 
 
-export default function AddEmployeeDialog({ open, handleClose }) {
+export default function AddEmployeeDialog({ open, handleClose, setSuccessCreateSnackbar }) {
   
   const [employee, setEmployee] = React.useState({
     'employeeCode': '',
@@ -89,6 +89,7 @@ export default function AddEmployeeDialog({ open, handleClose }) {
           'phoneNumber2': ''
         });
         setFirst(true);
+        setSuccessCreateSnackbar(true);
       }
     }
     if (isFormEmpty()) {

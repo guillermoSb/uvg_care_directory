@@ -23,10 +23,12 @@ export default function BasicTable({ search }) {
 
   const { employees, isLoading } = useFetchEmployees(search);
   const [selectedEmployee, setSelectedEmployee] = React.useState({});
-  const [openAddEmployee, setOpenAddEmployee] = React.useState(false);
 
+  const [openAddEmployee, setOpenAddEmployee] = React.useState(false);
   const [openEditEmployee, setOpenEditEmployee] = React.useState(false);
+  
   const [sucessEditSnackbar, setSucessEditSnackbar] = React.useState(false);
+  const [successCreateSnackbar, setSuccessCreateSnackbar] = React.useState(false);
 
 
   const handleClickOpenAdd = () => {
@@ -61,7 +63,7 @@ export default function BasicTable({ search }) {
 
       <Snackbar
         open={sucessEditSnackbar}
-        autoHideDuration={4000}
+        autoHideDuration={6000}
         onClose={() => setSucessEditSnackbar(false)}
       >
         <Alert onClose={() => setSucessEditSnackbar(false)} severity="success" sx={{ width: '100%' }}>
@@ -69,7 +71,18 @@ export default function BasicTable({ search }) {
         </Alert>
       </Snackbar>
 
-      <AddEmployeeDialog open={openAddEmployee} handleClose={handleCloseAdd} />
+      <Snackbar
+        open={successCreateSnackbar}
+        autoHideDuration={6000}
+        onClose={() => setSuccessCreateSnackbar(false)}
+      >
+        <Alert onClose={() => setSuccessCreateSnackbar(false)} severity="success" sx={{ width: '100%' }}>
+          Empleado creado con éxito.
+        </Alert>
+      </Snackbar>
+
+
+      <AddEmployeeDialog open={openAddEmployee} handleClose={handleCloseAdd} setSuccessCreateSnackbar={setSuccessCreateSnackbar} />
       <EditEmployeeDialog 
         open={openEditEmployee} 
         handleClose={handleCloseEdit} 
