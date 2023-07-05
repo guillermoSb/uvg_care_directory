@@ -38,6 +38,8 @@ export default function BasicTable({ search }) {
   };
 
   const handleClickOpenEdit = (selectedEmployeeData) => {
+    
+    selectedEmployeeData.phoneNumber2 = selectedEmployeeData.phoneNumber2 || '';
     setSelectedEmployee(selectedEmployeeData);
     setOpenEditEmployee(true);
   };
