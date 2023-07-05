@@ -7,11 +7,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Typography, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import Pagination from '@mui/material/Pagination';
+import { Typography, Button } from '@mui/material';
 
 import AddEmployeeDialog from './AddEmployeeDialog';
 import EditEmployeeDialog from './EditEmployeeDialog';
@@ -32,6 +33,8 @@ export default function BasicTable({ search }) {
   const [sucessEditSnackbar, setSucessEditSnackbar] = React.useState(false);
   const [successCreateSnackbar, setSuccessCreateSnackbar] = React.useState(false);
   const [successDeleteSnackbar, setSuccessDeleteSnackbar] = React.useState(false);
+
+  const [page, setPage] = React.useState(1);
 
 
   const handleClickOpenAdd = () => {
@@ -60,6 +63,10 @@ export default function BasicTable({ search }) {
   const handleCloseDelete = () => {
     setOpenDeleteEmployee(false);
   };
+
+  const handleChangePage = (event, value) => {
+    setPage(value);
+  };  
 
 
   if (isLoading) {
@@ -133,64 +140,68 @@ export default function BasicTable({ search }) {
       { search ? <Typography variant='h6'>
                     Resultados para: {search}
                   </Typography> : 
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell> Código </TableCell>
-              <TableCell align="right">Nombre</TableCell>
-              <TableCell align="right">Apellido</TableCell>
-              <TableCell align="right">Dirección</TableCell>
-              <TableCell align="right">Puesto</TableCell>
-              <TableCell align="right">Correo</TableCell>
-              <TableCell align="right">Teléfono</TableCell>
-              <TableCell align="right">Teléfono Secundario</TableCell>
-              <TableCell align="right"></TableCell>
-              <TableCell align="right"></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {employees && employees.map((employee) => (
-              <TableRow
-                key={employee.employeeCode}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">{employee.employeeCode}</TableCell>
-                <TableCell align="right">{employee.name}</TableCell>
-                <TableCell align="right">{employee.lastName}</TableCell>
-                <TableCell align="right">{employee.location}</TableCell>
-                <TableCell align="right">{employee.position}</TableCell>
-                <TableCell align="right">{employee.email}</TableCell>
-                <TableCell align="right">{employee.phoneNumber}</TableCell>
-                <TableCell align="right">{employee.phoneNumber2}</TableCell>
-                <TableCell align="right">
-                  <Button 
-                    variant="text"
-                    onClick={() => handleClickOpenEdit(employee)}
-                    >                    
-                    <EditIcon />
-                  </Button>
-                </TableCell>
-                
-                <TableCell align="right">
-                  <Button 
-                    variant="text"
-                    onClick={() => handleClickOpenDelete(employee)}
-                    >
-                    <DeleteIcon /> 
-                  </Button>
-                </TableCell>
+      <Box>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell> Código </TableCell>
+                <TableCell align="right">Nombre</TableCell>
+                <TableCell align="right">Apellido</TableCell>
+                <TableCell align="right">Dirección</TableCell>
+                <TableCell align="right">Puesto</TableCell>
+                <TableCell align="right">Correo</TableCell>
+                <TableCell align="right">Teléfono</TableCell>
+                <TableCell align="right">Teléfono Secundario</TableCell>
+                <TableCell align="right"></TableCell>
+                <TableCell align="right"></TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {employees && employees.slice((page - 1) * 5, page * 5).map((employee) => (
+                <TableRow
+                  key={employee.employeeCode}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">{employee.employeeCode}</TableCell>
+                  <TableCell align="right">{employee.name}</TableCell>
+                  <TableCell align="right">{employee.lastName}</TableCell>
+                  <TableCell align="right">{employee.location}</TableCell>
+                  <TableCell align="right">{employee.position}</TableCell>
+                  <TableCell align="right">{employee.email}</TableCell>
+                  <TableCell align="right">{employee.phoneNumber}</TableCell>
+                  <TableCell align="right">{employee.phoneNumber2}</TableCell>
+                  <TableCell align="right">
+                    <Button 
+                      variant="text"
+                      onClick={() => handleClickOpenEdit(employee)}
+                      >                    
+                      <EditIcon />
+                    </Button>
+                  </TableCell>
+                  
+                  <TableCell align="right">
+                    <Button 
+                      variant="text"
+                      onClick={() => handleClickOpenDelete(employee)}
+                      >
+                      <DeleteIcon /> 
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        
+        <Pagination 
+          count={employees.length} 
+          page={page} 
+          onChange={handleChangePage}
+          sx={{ display: 'flex', justifyContent: 'center', marginTop: '1em' }} 
+          />
+      </Box>
       }
-
-      {/* <Typography variant='body2'>
-        { search ? `Resultados para: ${search}` : '' }
-      </Typography> */}
-
     </Box>
   );
 }
