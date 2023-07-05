@@ -95,11 +95,11 @@ export default function AddEmployeeDialog({ open, handleClose }) {
       setInfoMessage('Por favor, llene todos los campos requeridos.');
       setInfoCreateSnackbar(true);
     }
-    if (!isEmailValid(employee['email'])) {
+    if (!isEmailValid(employee['email']) && !first) {
       setInfoMessage('Por favor, ingrese un correo electrónico válido.');
       setInfoCreateSnackbar(true);
     }
-    if (!isCodeValid(employee['employeeCode'])) {
+    if (!isCodeValid(employee['employeeCode']) && !first) {
       setInfoMessage('Solo se aceptan valores númericos para el código.');
       setInfoCreateSnackbar(true);
     }
