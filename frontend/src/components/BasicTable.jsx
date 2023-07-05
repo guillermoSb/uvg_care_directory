@@ -31,6 +31,7 @@ export default function BasicTable({ search }) {
   
   const [sucessEditSnackbar, setSucessEditSnackbar] = React.useState(false);
   const [successCreateSnackbar, setSuccessCreateSnackbar] = React.useState(false);
+  const [successDeleteSnackbar, setSuccessDeleteSnackbar] = React.useState(false);
 
 
   const handleClickOpenAdd = () => {
@@ -68,11 +69,6 @@ export default function BasicTable({ search }) {
   return (
     <Box sx={{ margin: '2em', marginTop: '3em' }}>
 
-      <DeleteEmployeeDialog 
-        employeeData={selectedEmployee}
-        open={openDeleteEmployee}
-        onClose={handleCloseDelete}
-      />
 
       <Snackbar
         open={sucessEditSnackbar}
@@ -94,14 +90,36 @@ export default function BasicTable({ search }) {
         </Alert>
       </Snackbar>
 
+      <Snackbar
+        open={successDeleteSnackbar}
+        autoHideDuration={6000}
+        onClose={() => setSuccessDeleteSnackbar(false)}
+      >
+        <Alert onClose={() => setSuccessDeleteSnackbar(false)} severity="success" sx={{ width: '100%' }}>
+          Información eliminada con éxito.
+        </Alert>
+      </Snackbar>
 
-      <AddEmployeeDialog open={openAddEmployee} handleClose={handleCloseAdd} setSuccessCreateSnackbar={setSuccessCreateSnackbar} />
+
+      <AddEmployeeDialog 
+        open={openAddEmployee} 
+        handleClose={handleCloseAdd} 
+        setSuccessCreateSnackbar={setSuccessCreateSnackbar} 
+      />
+      
       <EditEmployeeDialog 
         open={openEditEmployee} 
         handleClose={handleCloseEdit} 
         employeeData={selectedEmployee} 
         setSucessEditSnackbar={setSucessEditSnackbar}
         />
+
+      <DeleteEmployeeDialog 
+        employeeData={selectedEmployee}
+        open={openDeleteEmployee}
+        onClose={handleCloseDelete}
+        setSuccessDeleteSnackbar={setSuccessDeleteSnackbar}
+      />
 
   
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1em'}}>

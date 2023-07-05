@@ -9,12 +9,13 @@ import { Typography } from '@mui/material';
 import { deleteEmployee } from '../helpers/deleteEmployee';
 
 
-export default function AlertDialog({ open, onClose, employeeData }) {
+export default function AlertDialog({ open, onClose, employeeData, setSuccessDeleteSnackbar }) {
 
   const handleDeleteEmployee = () => {
     const { employeeCode } = employeeData;
     deleteEmployee(employeeCode);
     onClose();
+    setSuccessDeleteSnackbar(true);
   };
 
   return (
@@ -27,7 +28,7 @@ export default function AlertDialog({ open, onClose, employeeData }) {
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             <Typography variant="body1" align='center'>
-              ¿Está seguro de eliminar los datos de {employeeData.name} {employeeData.lastName}?
+              ¿Confirma que desea eliminar los datos de {employeeData.name} {employeeData.lastName}?
             </Typography>
           </DialogContentText> 
         </DialogContent>
