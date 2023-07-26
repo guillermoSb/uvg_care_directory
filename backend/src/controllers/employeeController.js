@@ -1,4 +1,5 @@
 
+const employee_datasource = require('../data/employeeDatasource');
 const Employee = require('../entities/employee');
 
 let datasource = [
@@ -7,77 +8,105 @@ let datasource = [
 	];
 
 const fetchAllEmployees = async (req, res) => {
-	// Fetch employees from the database
-	return res.status(200).json({
-		employees: datasource.map(employee => employee.toJSON()),
-	})
+	try {
+		
+		const employees = await employee_datasource.fetchAllEmployees();
+		
+		// Fetch employees from the database
+		return res.status(200).json({
+			employees: employees.map(employee => employee.toJSON())
+		})
+	} catch (error) {
+		console.error(error)
+		res.status(500).json({
+			error: error.message,
+		})
+	}
 };
 
 const addEmployee = async (req, res) => {
-	const { employeeCode, name, lastName, location, position, email, phoneNumber, phoneNumber2 } = req.body;
+	try {		
+		const { employeeCode, name, lastName, location, position, email, phoneNumber, phoneNumber2 } = req.body;
+		const employee = new Employee(employeeCode, name, lastName, location, position, email, phoneNumber, phoneNumber2);
+		await employee_datasource.addEmployee(employee);
+		const employees = await employee_datasource.fetchAllEmployees();
+		return res.status(200).json({
+						employees: employees.map(employee => employee.toJSON())
 
-	const errors = [];
-
-    const emailExists = datasource.find(employee => employee.email === email);
-    if (emailExists) {
-        errors.push('Ya existe un empleado con este correo.');
-    }
-
-    const employeeCodeExists = datasource.find(employee => employee.employeeCode === employeeCode);
-    if (employeeCodeExists) {
-        errors.push('Ya existe un empleado con este código.');
-    }
-
-    if (errors.length > 0) {
-        return res.status(400).json({
-            errors: errors,
-        });
-    }
-
-	const newEmployee = new Employee(employeeCode, name, lastName, location, position, email, phoneNumber, phoneNumber2);
-	datasource.push(newEmployee);
-	return res.status(200).json({
-		employees: datasource.map(employee => employee.toJSON()),
-	})
+		})
+	} catch (error) {
+			console.error(error)
+			res.status(500).json({
+				error: error.message,
+			})
+	}
 }
 
 const removeEmployee = async (req, res) => {
-	const { employeeCode } = req.params;
-	datasource = datasource.filter(employee => employee.employeeCode !== employeeCode);
-	return res.status(200).json({
-		employees: datasource.map(employee => employee.toJSON()),
-	})
+	try {		
+		const { employeeCode } = req.params;
+		await employee_datasource.removeEmployee(employeeCode);
+		const employees = await employee_datasource.fetchAllEmployees();
+		return res.status(200).json({
+						employees: employees.map(employee => employee.toJSON())
+
+		})
+	} catch (error) {
+			console.error(error)
+			res.status(500).json({
+				error: error.message,
+			})
+	}
 }
 
 const deleteAllEmployees = async (req, res) => {
-	datasource = [];
-	return res.status(200).json({
-		employees: datasource.map(employee => employee.toJSON()),
-	})
+	try {		
+		await employee_datasource.deleteAllEmployees();
+		const employees = await employee_datasource.fetchAllEmployees();
+		return res.status(200).json({
+						employees: employees.map(employee => employee.toJSON())
+
+		})
+	} catch (error) {
+			console.error(error)
+			res.status(500).json({
+				error: error.message,
+			})
+	}
 }
 
 
 const updateEmployee = async (req, res) => {
-
-	const { employeeCode } = req.params;
-	const { name, lastName, location, position, email, phoneNumber, phoneNumber2 } = req.body;
-	const employeeIndex = datasource.findIndex(employee => employee.employeeCode === employeeCode);
-
-	const emailExists = datasource.find(employee => employee.email === email && employee.employeeCode !== employeeCode);
-	if (emailExists) {
-		return res.status(400).json({
-			message: 'Ya existe un empleado con este correo.',
-		})
+	try {		
+		const { employeeCode, name, lastName, location, position, email, phoneNumber, phoneNumber2 } = req.body;
+		const employee = new Employee(employeeCode, name, lastName, location, position, email, phoneNumber, phoneNumber2);
+		await employee_datasource.updateEmployee(employeeCode, employee);
+		const employees = await employee_datasource.fetchAllEmployees();
+		return res.status(200).json({
+			employees: employees.map(employee => employee.toJSON())
+		});
+	} catch (error) {
+			console.error(error)
+			res.status(500).json({
+				error: error.message,
+			})
 	}
-	
-	datasource[employeeIndex] = new Employee(employeeCode, name, lastName, location, position, email, phoneNumber, phoneNumber2);
-	return res.status(200).json({
-		employees: datasource.map(employee => employee.toJSON()),
-	})
 }
 
 const searchEmployee = async (req, res) => {
-	throw new Error('Not implemented');
+	try {
+		const { query } = req.query;
+		const employees = await employee_datasource.searchEmployee(query);
+		return res.status(200).json({
+			employees: employees.map(employee => employee.toJSON())
+		});
+		
+	} catch (error) {
+		console.error(error)
+			res.status(500).json({
+				error: error.message,
+			})
+	}
 }
 
 

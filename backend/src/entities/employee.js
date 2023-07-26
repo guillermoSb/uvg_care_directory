@@ -10,8 +10,10 @@
 		this.phoneNumber2 = phoneNumber2;
 	}
 
-	toJSON() {
+	 toJSON() {
+
 		return {
+			
 			employeeCode: this.employeeCode,
 			name: this.name,
 			lastName: this.lastName,
@@ -21,7 +23,23 @@
 			phoneNumber: this.phoneNumber,
 			phoneNumber2: this.phoneNumber2,
 		};
-	}
+	 }
+	 
+	 toDB() {
+		 return {
+			
+			'code': this.employeeCode,
+			name: this.name,
+			'last_name': this.lastName,
+			'locality': this.location,
+			'corporate_position': this.position,
+			email: this.email,
+			'phone': this.phoneNumber,
+			'phone2': this.phoneNumber2,
+		};
+	 }
 }
+
+
 
 module.exports = Employee;
