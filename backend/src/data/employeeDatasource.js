@@ -1,15 +1,17 @@
 const { deleteAllEmployees } = require('../controllers/employeeController');
 const Employee = require('../entities/employee');
+require('dotenv').config();
+
 
 class EmployeeDatasource {
 	knex = require('knex')({
   client: 'pg',
 		connection: {
 			host: process.env.DB_HOST,
-    	port: 5432,
-    	user: 'inland',
-    	database: 'care_uvg',
-    	password: '12345678',
+    	port: process.env.DB_PORT,
+    	user: process.env.DB_USER,
+    	database: process.env.DB_NAME,
+    	password: process.env.DB_PASSWORD,
 		}
 	});
 	

@@ -27,7 +27,7 @@ export default function AddEmployeeDialog({ open, handleClose, setSuccessCreateS
 
   const [first, setFirst] = React.useState(true);
 
-  const [createError, setCreateError] = React.useState([]);
+  const [createError, setCreateError] = React.useState('');
   const [infoCreateSnackbar, setInfoCreateSnackbar] = React.useState(false);
   const [infoMessage, setInfoMessage] = React.useState('');
 
@@ -72,10 +72,10 @@ export default function AddEmployeeDialog({ open, handleClose, setSuccessCreateS
 
       if (!response.ok) {
         const resBody = await response.json();
-        setCreateError(resBody.errors);
+        setCreateError(resBody.error);
 
       } else {
-        setCreateError([]);
+        setCreateError('');
         handleClose();
         setEmployee({
           'employeeCode': '',
@@ -134,24 +134,19 @@ export default function AddEmployeeDialog({ open, handleClose, setSuccessCreateS
       </Snackbar>
 
 
-      {createError.length > 0 && 
-        createError.map((error, index) => (
-          <Snackbar
-            key={index} 
-            open={createError.length > 0}
-            autoHideDuration={4000}
-            onClose={() => setCreateError([])}
-          >
-            <Alert
-              onClose={() => setCreateError([])}
-              severity='error'
-              sx={{ width: '100%' }}
-            >
-              {error}
-            </Alert>
-          </Snackbar>
-        ))
-      }
+      <Snackbar
+        open={createError !== ''}
+        autoHideDuration={4000}
+        onClose={() => setCreateError('')}
+      >
+        <Alert
+          onClose={() => setCreateError('')}
+          severity='error'
+          sx={{ width: '100%' }}
+        >
+          {createError}
+        </Alert>
+      </Snackbar>
 
         
 
