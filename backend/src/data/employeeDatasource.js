@@ -54,9 +54,17 @@ class EmployeeDatasource {
 	}
 
 	async updateEmployee(employeeCode, employee) {
+		
+		// validate email does not exist
+		const emailExists = await this.knex.select('*').from('employees').where('email', employee.email);
+		if (emailExists.length > 0) {	
+			if (emailExists[0].code !== employeeCode) {
+				throw new Error('Ya existe un empleado con este correo.');
+			}
+		}
+
 		const rawEmployee = await this.knex('employees').where('code', employeeCode).update(employee.toDB()).returning('*');
 		return this.employeeFromRaw(rawEmployee[0]);
-
 	}
 
 	async searchEmployee(query) {

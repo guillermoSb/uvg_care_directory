@@ -71,7 +71,7 @@ export default function EditEmployeeDialog({ open, handleClose, employeeData, se
 
       if (!response.ok) {
         const resBody = await response.json();
-        setEditError(resBody.message);
+        setEditError(resBody.error);
       } else {
         
         if (isDataChanged()) {
