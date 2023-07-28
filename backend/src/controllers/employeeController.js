@@ -78,7 +78,8 @@ const deleteAllEmployees = async (req, res) => {
 
 const updateEmployee = async (req, res) => {
 	try {		
-		const { employeeCode, name, lastName, location, position, email, phoneNumber, phoneNumber2 } = req.body;
+		const { name, lastName, location, position, email, phoneNumber, phoneNumber2 } = req.body;
+		const { employeeCode } = req.params;
 		const employee = new Employee(employeeCode, name, lastName, location, position, email, phoneNumber, phoneNumber2);
 		await employee_datasource.updateEmployee(employeeCode, employee);
 		const employees = await employee_datasource.fetchAllEmployees();
