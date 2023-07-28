@@ -69,19 +69,16 @@ class EmployeeDatasource {
 
 	async searchEmployee(query) {
 
-		// search by name, last name, full name, code, email, locality or position
-		const query_wo_spaces = query.replace(/\s+/g, ' ');
-		const employees = await this.knex.select('*')
-			.from('employees')
-			.whereRaw("regexp_replace(concat(name, ' ', last_name), '\\s+', ' ', 'g') ilike ?", [`%${query_wo_spaces}%`])
-			.orWhere('code', 'ilike', `%${query_wo_spaces}%`)
-			.orWhere('email', 'ilike', `%${query_wo_spaces}%`)
-			.orWhere('locality', 'ilike', `%${query_wo_spaces}%`)
-			.orWhere('corporate_position', 'ilike', `%${query_wo_spaces}%`);
-
+		// search by name, last name, code, email, locality or position
+		const employees = await this.knex.select('*').from('employees')
+				.where('name', 'ilike', `%${query}%`)
+				.orWhere('last_name', 'ilike', `%${query}%`)
+				.orWhere('code', 'ilike', `%${query}%`)
+				.orWhere('email', 'ilike', `%${query}%`)
+				.orWhere('locality', 'ilike', `%${query}%`)
+				.orWhere('corporate_position', 'ilike', `%${query}%`)
+				.orWhere(this.knex.raw('?? || \' \' || ??', ['name', 'last_name']), 'ilike', `%${query}%`);
 		return employees.map(this.employeeFromRaw);
-
-
 	}
 	
 	/**
