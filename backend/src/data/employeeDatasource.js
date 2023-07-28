@@ -68,11 +68,18 @@ class EmployeeDatasource {
 	}
 
 	async searchEmployee(query) {
-		// search by name, email, locality or corporate_position
-		const employees = await this.knex.select('*').from('employees').where('name', 'ilike', `%${query}%`).orWhere('email', 'ilike', `%${query}%`).orWhere('locality', 'ilike', `%${query}%`).orWhere('corporate_position', 'ilike', `%${query}%`);
+
+		// search by name, code, email, locality or position
+		const employees = await this.knex.select('*')
+			.from('employees')
+			.where('name', 'ilike', `%${query}%`)
+			.orWhere('code', 'ilike', `%${query}%`)
+			.orWhere('email', 'ilike', `%${query}%`)
+			.orWhere('locality', 'ilike', `%${query}%`)
+			.orWhere('corporate_position', 'ilike', `%${query}%`);
 		return employees.map(this.employeeFromRaw);
 	}
-
+	
 	/**
 	 * 
 	 * @param {*} rawEmployee 
@@ -81,10 +88,6 @@ class EmployeeDatasource {
 	employeeFromRaw(rawEmployee) {
 		return new Employee(rawEmployee.code, rawEmployee.name, rawEmployee.last_name, rawEmployee.locality, rawEmployee.corporate_position, rawEmployee.email, rawEmployee.phone, rawEmployee.phone2)
 	}
-
-
-
-
 }
 
 
