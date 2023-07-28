@@ -15,7 +15,7 @@ export const useSearch = (query) => {
 
     useEffect(() => {
         geSearchData();
-    }, [query]);  
+    });  
     
     return {
         searchRes,
