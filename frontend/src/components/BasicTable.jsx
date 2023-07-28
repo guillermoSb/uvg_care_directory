@@ -132,17 +132,22 @@ export default function BasicTable({ search }) {
         setSuccessDeleteSnackbar={setSuccessDeleteSnackbar}
       />
 
-  
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1em'}}>
+
+      {
+        searchRes.length !== 0 ?
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1em'}}>
         <Button 
           variant="outlined"
           onClick={handleClickOpenAdd}>
           Agregar empleado
         </Button>
-      </Box>
+      </Box> : null
+      }
 
       { search ? 
-        <Box>
+      
+      (  searchRes && searchRes.length !== 0 ?
+      <Box>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
@@ -202,7 +207,9 @@ export default function BasicTable({ search }) {
           onChange={handleChangePage}
           sx={{ display: 'flex', justifyContent: 'center', marginTop: '1em' }} 
           />
-      </Box>
+      </Box> : <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Typography>No se encontraron resultados.</Typography> 
+               </Box> )
       : 
       <Box>
         <TableContainer component={Paper}>
