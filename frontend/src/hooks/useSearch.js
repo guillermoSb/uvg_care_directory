@@ -14,8 +14,6 @@ export const useSearch = (query) => {
     }
 
     useEffect(() => {
-        console.log(searchRes);
-        console.log(query);
         geSearchData();
     }, [query]);  
     

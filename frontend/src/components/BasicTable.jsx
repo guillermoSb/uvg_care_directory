@@ -71,8 +71,10 @@ export default function BasicTable({ search }) {
   };  
 
 
-  if (isLoading) {
+  if (isLoading && !search) {
     return <Typography>Cargando...</Typography>;  
+  } else if (isLoadingSearch && search) {
+    return <Typography>Cargando búsqueda...</Typography>;
   }
 
   return (
