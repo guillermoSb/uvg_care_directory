@@ -133,16 +133,14 @@ export default function BasicTable({ search }) {
       />
 
 
-      {
-        searchRes.length !== 0 ?
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1em'}}>
         <Button 
           variant="outlined"
           onClick={handleClickOpenAdd}>
           Agregar empleado
         </Button>
-      </Box> : null
-      }
+      </Box>
+      
 
       { search ? 
       
