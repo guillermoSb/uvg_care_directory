@@ -1,6 +1,6 @@
 
 export const deleteEmployee = async (id) => {
-    const url = `http://10.24.66.19:3000/employees/${id}`;
+    const url = `http://10.124.0.7:3000/employees/${id}`;
 
     const response = await fetch(url, {
         method: 'DELETE', 
