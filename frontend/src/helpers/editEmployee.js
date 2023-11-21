@@ -1,7 +1,7 @@
 
 export const editEmployee = async (id, employee) => {
 
-    const url = `http://164.90.148.141:3000/employees/${id}`;
+    const url = `http://35.209.115.212/api/employees/${id}`;
     const response = await fetch(url, {
         method: 'PUT', 
         headers: {
