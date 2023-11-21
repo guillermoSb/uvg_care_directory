@@ -1,6 +1,6 @@
 
 export const addEmployee = async (employee) => {
-    const url = 'http://147.182.250.202:3000/employees';
+    const url = 'http://143.198.129.148:3000/employees';
 
     const response = await fetch(url, {
         method: 'POST', 
