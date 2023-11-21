@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { getEmployees } from 'your-api-utils'; // Replace with your actual API utility function
+import { useState, useEffect } from "react";
+import { getEmployees } from "../helpers/getEmployees";
 
 export const useFetchEmployees = () => {
     const [employees, setEmployees] = useState([]);
